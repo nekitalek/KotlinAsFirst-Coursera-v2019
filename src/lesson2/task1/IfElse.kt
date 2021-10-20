@@ -3,6 +3,8 @@
 package lesson2.task1
 
 import lesson1.task1.discriminant
+import java.lang.Integer.min
+import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.sqrt
 
@@ -127,4 +129,14 @@ fun triangleKind(a: Double, b: Double, c: Double): Int = TODO()
  * Найти длину пересечения отрезков AB и CD.
  * Если пересечения нет, вернуть -1.
  */
-fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int = TODO()
+fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
+    if (c < a && d > b)
+        return b - a
+    if (b < c || d < a)
+        return -1
+    if (c > a && b > d)
+        return d - c
+    val k = max(a, c)
+    val l = min(b, d)
+    return l - k
+}

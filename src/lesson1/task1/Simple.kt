@@ -3,6 +3,7 @@
 package lesson1.task1
 
 import kotlin.math.*
+import kotlin.system.exitProcess
 
 /**
  * Пример
@@ -118,4 +119,19 @@ fun accountInThreeYears(initial: Int, percent: Int): Double = TODO()
  * Пользователь задает целое трехзначное число (например, 478).
  * Необходимо вывести число, полученное из заданного перестановкой цифр в обратном порядке (например, 874).
  */
-fun numberRevert(number: Int): Int = TODO()
+fun numberRevert(number: Int): Int {
+    var chislo = number
+    var reverse = 0
+    var i = 0
+    var check = 0
+    while (chislo != 0) {
+        val digit = chislo % 10
+        i += 1
+        reverse = reverse * 10 + digit
+        chislo /= 10
+        if (i == 3) {
+            check = 0
+        }
+    }
+    return reverse
+}

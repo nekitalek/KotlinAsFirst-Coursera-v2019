@@ -164,7 +164,21 @@ fun cos(x: Double, eps: Double): Double = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun revert(n: Int): Int = TODO()
+fun revert(n: Int): Int {
+    var temp = n
+    val digs: MutableList<Int> = arrayListOf()
+    var res = 0
+    do {
+        val dig = temp % 10
+        digs.add(dig)
+        temp /= 10
+    } while (temp > 0)
+
+    for (q in 0 until digs.size) {
+        res = res * 10 + digs[q]
+    }
+    return res
+}
 
 /**
  * Средняя
