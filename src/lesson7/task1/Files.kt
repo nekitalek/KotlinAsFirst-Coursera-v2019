@@ -70,7 +70,38 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
  *
  */
 fun sibilants(inputName: String, outputName: String) {
-    TODO()
+    val outputStream = File(outputName).bufferedWriter()
+
+    for (line in File(inputName).readLines()) {
+        if (line.isEmpty()) {
+            continue
+        }
+        var str = line
+        var i = 0
+        while (i < str.lastIndex) {
+            if (str[i].toLowerCase() == 'ш' || str[i].toLowerCase() == 'ж' ||
+                str[i].toLowerCase() == 'ч' || str[i].toLowerCase() == 'щ'
+            ) {
+                i++
+                if (str[i].toString() == "я")
+                    str = str.replaceRange(i, i + 1, "а")
+                else if (str[i].toString() == "Я")
+                    str = str.replaceRange(i, i + 1, "А")
+                else if (str[i].toString() == "ы")
+                    str = str.replaceRange(i, i + 1, "и")
+                else if (str[i].toString() == "Ы")
+                    str = str.replaceRange(i, i + 1, "И")
+                else if (str[i].toString() == "ю")
+                    str = str.replaceRange(i, i + 1, "у")
+                else if (str[i].toString() == "Ю")
+                    str = str.replaceRange(i, i + 1, "У")
+            } else
+                i++
+        }
+        outputStream.write(str)
+        outputStream.newLine()
+    }
+    outputStream.close()
 }
 
 /**
@@ -143,7 +174,29 @@ fun alignFileByWidth(inputName: String, outputName: String) {
  * Ключи в ассоциативном массиве должны быть в нижнем регистре.
  *
  */
-fun top20Words(inputName: String): Map<String, Int> = TODO()
+fun top20Words(inputName: String): Map<String, Int> {
+    var i = 0
+    val map: MutableMap<String, Int> = mutableMapOf()
+
+    for (str in File(inputName).readLines()) {
+        if (str.isEmpty()) {
+            continue
+        }
+        for (word in str.split("[\\p{Punct}\\d\\s—»«]+".toRegex())) {
+            if (!map.containsKey(word.toLowerCase()))
+                map[word.toLowerCase()] = 1
+            else {
+                map.replace(word.toLowerCase(), map.getValue(word.toLowerCase()) + 1)
+            }
+        }
+    }
+    val sorted = map.toList().sortedBy { (_, value) -> -value }.toMap()
+    val result: MutableMap<String, Int> = mutableMapOf()
+    while (i < 20 && i < sorted.size) {
+        result[sorted.toList().get(i).first] = sorted.toList().get(i++).second
+    }
+    return result
+}
 
 /**
  * Средняя
